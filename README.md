@@ -1,2 +1,5 @@
 # Kreker
-freelance work
+
+Калькулятора расчета времени
+
+![screenshot](img.png) 

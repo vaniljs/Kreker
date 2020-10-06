@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    @font-face {
+        font-family: 'Monsterrat regular';
+        src: url('works/Kreker/font/Montserrat-Regular.eot'),
+        url('works/Kreker/font/Montserrat-Regular.woff') format('woff'),
+        url('works/Kreker/font/Montserrat-Regular.ttf') format('ttf'); /* Legacy iOS */
+    }
+
+    @font-face {
+        font-family: 'Monsterrat medium';
+        src: url('works/Kreker/font/Montserrat-Medium.eot'),
+        url('works/Kreker/font/Montserrat-Medium.woff') format('woff'),
+        url('works/Kreker/font/Montserrat-Medium.ttf') format('ttf'); /* Legacy iOS */
+    }
+
+    body {background-color: #E7E7E7}
+
+    .calc_wrapper {
+        width: 100%;
+        max-width: 350px;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        text-align: center;
+        padding: 30px 40px;
+        background-color: #fff;
+        font-family: 'Monsterrat regular', sans-serif;
+        font-weight: 400;
+        font-size: 12px;
+    }
+    .calc_title {
+        font-family: 'Monsterrat medium', sans-serif;
+        font-weight: 500;
+        font-size: 18px;
+    }
+    .or_text {
+        color: #B622B5;
+    }
+
+    .calc_range {
+        height: 0;
+        width: 0;
+        cursor: pointer;
+    }
+
+    .calc_range_group {
+        position: relative;
+        margin: 30px auto;
+        width: 100%;
+        max-width: 265px;
+    }
+    .calc_range_group input[type="range"] {
+        -webkit-appearance: none;
+        border-radius: 10px;
+        width: 100%;
+        height: 10px;
+        margin: 0;
+        background-image: -webkit-linear-gradient(left, #B622B5 0%, #B622B5 0%, #fff 0%, #fff 100%);
+        outline: none;
+        transition: .1s;
+    }
+
+    .calc_range_group input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 25px;
+        height: 25px;
+        border: 00;
+        border-radius: 50%;
+        transition: .1s;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDYuMC1jMDAyIDc5LjE2NDQ2MCwgMjAyMC8wNS8xMi0xNjowNDoxNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjIgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjA3NDc2RUU0MDdGNTExRUJCQzMzOEI2Mzg4M0EyNzI2IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjA3NDc2RUU1MDdGNTExRUJCQzMzOEI2Mzg4M0EyNzI2Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDc0NzZFRTIwN0Y1MTFFQkJDMzM4QjYzODgzQTI3MjYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDc0NzZFRTMwN0Y1MTFFQkJDMzM4QjYzODgzQTI3MjYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4LP0E9AAAPWklEQVR42mxZWWxU1xn+7jJ3dtuDt2AMBswaduKwJoFAAk2d0Ig4aRulFVWqVq3aqJUqVVUfWqVvVZWXSu1T+9CKhtBGiIQkTbNBUgShoWFJqDFgO7GxscEG2+NZ79L/P3PO5XhgxNG943vnnO//zvdvB6OrqwvffPZZ1NTUAEEAOxKB7/solUo4f+4c3nzjDUzcugWjNgM/04C1q1ej6+EHsahlNkzLgmWay7wgeMh33Qc8z1vhel6r57p1pXLZyefzbqlYvJUvFIYLhcIFuj9RLpeP0ThL7wTDk1mcHRzG8MgoysMDcEoFgeORXbuwePFijFy7Btu2ESFMXiwJ+B6O/P0AjJcPHMA1elgmkOvWrUPZdcX9Rx99hOM0XMNEsSaDZavW4LFNHVjZNhfRaHQ2Ae6iyfaSkevJyBoCDAICvrquh3K5hFw+DwIKAi8GE0GAczTOk1GH6f2DruteGcrm8PnQCK4PDiBy6wYiADZt2YJNmzcjNzWFkhPD/kg9MpaJr+VHYFvEluM4iJBFauJDhw6h52I3ik4c0db5eGbHNmxduhgxx55DRv0EpvmdqGHU844EtDuGYcCghfgKMSA+fOHnPg11pd8kaGzkQbvySxoH7ok5v2tdvqj7i9Y5OH7uMwTjIzj6/vsYHh5G11N7kXUDNDoRpC0DmWgdrD179iCVTqOuLgPaRhx85RX09/ZikgC3re3Ac49sx4rZzfB8/0eej/0EbJdpGAnTNMGDjabvFWBkhAQmGCdGiXW3wjDvAg1X7oi4ep5DYz1NtC8adaILGmedXLG43e3PlZHN5ZAdvYaeS5dw35o1WGW6uNdyYRMTpu8HYlLPc3Ho1VfR19eH6XQGqzdvxdc3d6DOsVonc7kjBOD39E4zv+cxKAYoB7NrkAGCcUG0EbIcSCMC+W5Q/Vv6kMxSTsT5lW+YR5tSyVXff2wnVtH62UQN6XoErxCRAcmNwNK7DswSfUmnUjhy5Ah6e6/Am9WERStWYdfyRQjc8v35QvFDAtxZkqyF2hX3tDB9FxIRejCUKNinxcfXgdNVAOY5JGjeqVg0KiRKY6NhWcfS8djj+3Y+hA0PPoRSXQP6aOdfe/11QQzPYTY0NODUqVPovvA58vE05i5Zhp1LF6BYLGwrlkpvE8gFDJa3moELR5PDk4vP0LUCL3UdMiyB+4pp+i1/ogyYRoRBE4uxWCxjWvYhyzCe3ffINixdux5+XT16uv+H90jnvI61lbz0TWI5a1hovne1AGwGfofnB2/SQhnoDkYfoWOWAmvaqmhajUDpmgYbSkYL6XEEYYPZcNa22jEOZclEkoEK8PFEXLBu8iLAk5ZpnF27uP3iZ6PjGB+5hvGhq5g9Zw6sAkWMAk1gzpmP7SuWIm2bLQT4bYJ4TyA2GlKrFeB8lfFZOCCDtdkZaQg50FwKtAJcpMFhVO0YD54nmUggHk8gGosiQfcMmOeT65m0dmfCcd6cP6dl5JMvr6I8PobhwUGYU5OTKCRrsXbJItQ7tlFyvT/Tom0qCri0AC/KAPhesMYgNNZcpWvNOEhH1J3Ok5LivzOzzLATdQh4hWGLwu5thxYjXXLd/e3NDanHdzyMyWhCJDrTpkzX2LYA7bUpFN3yD2jy3b6mP74XW82MVZJDxQh2TMkaP+d3w8XkDgVa+At9gRIPs8nMRgl0ggDH6WorhqUETQmePisKJffFHavvxcqO+zHlkSPmkzVYPrsRNoJ7KPy9qOtSdxxmtUhxXLFOaTncagbP0UToXzGlmJZyqWRKl/7mS6BxwTCDtyXDLDcNrNgx02R/MX+cikXXdm7dDKOhGWbT7BbMq00jMM2f0cv1upf7VTGVgTPYArNOV05GJelsFUBBuCAz7cso4UrAPDi0JZJJ4XRJujJgUzq2oQHme2Y/QpmQHNb2YPy6Y0k7lq9cCXP9/LmIR6PN9OPn2ZuVI1QnhRnA2XkJuLoq4AwwBEALe0oa7JS0G/xJEVBmN0W5IUoGqPdNuTvMLmvbISwydqsy44lkLLZmR8d62PMyNQzsaQJcp4K90qACqozQByjNCv0xG1yJ0cQxdihltIgkfhgx+MpySKXSqKGygR0vBKuxy3MxaGbZkrsgQ6xJ1eTzm1Yuf8GmlwwC8YzOJgMXkUOy5GsJQgxagJkLGDgtyAsxGxxVOCoo1lzPDeM1L15LZWdtbY0Ar+8Iz8EyUYPBWtIZmRTNMfeknegv6B17KQFZH1ZjUseBAk8TqALH1UJWIJNJVno7S4tDGOvVlM88Cbhcdqkgq0Fm1qzKc02/osqk33Idb8skpQPV4jaPNq5abWJoG4FNqgpNgFURhEGyMZxAJOByWDO77LwC3KSUCbPMFSMzybvBsuByN0rO1NjYJGTBIKCB5R0K2VVJSwBl0DKKyE9QKWi22/FE4oFQGh6z7Em2Gbg3M5Jw6pXA9fgsqjWakGUiQJOj8XIcXfjdVkq9mUymwiKBYqBsYEQyrMqAGeHuNsjwKr9ssImVldCkoYc6PcaGzkmGOVKrItHIcJednhZzsEQYIC8zRV1HXW0dmpubBZsMlhMJJxXlcAqoAqbKVehAZxrRbtMkrRUHEwVlWPQEVYZ4WoLQR7nEGbISu7PZLPr6+8GVoy8mDNDWNk+Et4SoM+KC3Uo9dBtICLQKbKC+M/uKdaDROPnxxyWuw0NLAlULBzOiRbUhnqZxAbxUxDSxPTExgRRFieaWOYjaFtrmip6yomVVqqp17s7kXf9m3DbEsxPxRETcKms0q9RH3z6dBWPmS+Eiw9dv4PrEJAwqhsZu3CDQMZKCNSNN64WVoV8VhplA9Wc0lWVy0WBDK3SqwRhVV7WAAsBXZpD1fX10FH2XL2HhokVURl7FuU//K6JGmgZLxJEOKDRt8ZCxuMqg6qGt79n04hTdZO6wuIpp9SOVEBSrom4mPbPTjYyMCE3z+xmSSP3KOpJMFmNjY5gi6XAWjMuCX0QOm6OHTChaM2FpZOgFmDQqb5MHD9H3jAZR/ZuRXk2tCFKdNjPL9Qc74A0CxqC5CmxuahatLbO7cOFCsQsTVLdzzObn3FZxHS2SigIss6BKLroBYUaspP0xm4Bd4JoVWoein2GoaOLKbkQd5vDiHDGmCfDNmzcxPj4uKkBmMZFMCBXxovX19cgRyyJ7UtrnLFmgaMMNNcdoR0pFgVfZUAdblc77WB4nCODTRpUz6QlF1SCiuZWNAANkhieJQWaRWWdDE7ILUfOwjjlu8/OAnJLZrsR7T8iKa3Fx9GXfKZMqhtX9aQb9Ac1epK2PBlprHyYWya7qUlRq5vDGY5K0zH/jMMasMdO8OBPAv+e/cd1cV1cXNgr8e0M+V+eGvJ5Fz0XPqaf0O8dRmyw+T0DPkwQ69PZeJZLwZEg2qjl5LpenrZ4ipgVgmRwEYKlTdgBfHK5UCiluYkvknDwvhy6WlpKjIseT9bi4yobZmimNa/T9uJ3N5T3Htg4RqBC0pzWsFVkw4KKoJUTnIplW3QqfUjkRe4ZjGcbt7BaRtQYD141k4CqsBjwkYSW6MlBf1zfX7Zb1z4mye9P84Mx5fvlvVB/ni9LBilo3whPn8jlRWzC7PPi+HAL2BUBRrUmnUmlaZVRbHHJGK8Bl58JXdWRQ7Wz88bTjhpIcRNKfekbHqAptnoP7li6+RRVwO72wTlVvZSmHgmRXRAu6sjxcDTBrmSUQF8cBlWMBMcghVf8nWJMVY6CdoBoyhAZh7SHDrZRNIJ/JY7cPC5734qnLfbCSs+qRqm/AkpbmC8Tqd0kSEZYD1xKq+y5L8CwP5UxqYfZqdRbHMhDRQ1Zyttpe2RSEHZD2ewXcVzWGdiik8gQ/swxj36WbU/1XLl6E1TIrgy+yeaxbtnTcDgKnUCpt0yWizjkYtOha9EW0iOFI4OqIi5tWqyo9+9rJqXJUyA5eFVLV2ZgNoBC3P+f5L3104SKS2Zuw5re20JYXMGFGcG9ry0mKDF+l+DlbhThlgDpFCgc7C02oF/QCtDoB5UiiCnup2QpoZtgPqzy+D/QDeNlIh3WPYVwlR3zqk6Hr0xMD/bBz0zDnzmtDLJ/FiRMncPJSX8Hw/W+R6CdKmlPeAVhupSUTgg6Mr7hL96H6QduudO/stFFhcCzcLXFMxvW2IR2TiqOobe+7MpEd6btyBbFcFm1UFph7nnxSFOm1hSkcev8oeq+PXTB9/zkC694NsDpvFocpDJjD292aUHU0pgFXtYU6IlDAHRnf1a5xEcVzOLb9wmi++O6Z3n7Ep8bFGk/s2QOTw8/jTzyBMiUK68YwDp/8BEO3Jo5Qdvw2AXZVY6A3CfyxZfCvDPt22NIcSHUigWZomDTkLkWUT8iQqYAnYtGfT7neH45f7kd5sB8ehdqnn3lG7Lw5SZ3GvHnzsPPRR2FQGZntv4zXTp/DeKH4csQ0u2jZCeV8anFTY7kiCePOczgFWJOJShRWmO0q4COS8YgoVSNeKh7/YT4wf/vuhUsofNmLIDuJnbt2oYUa5BtUv5g8GZeVW7Zswf0bNxLEmyhd/QKH//MpruUKhx3L3EHvnA3bNWBGXWBoZ9ZmWHcb1T1TeBueZwimK4VRRAKncvXLdCLROTyd/+PhT86gMNCL6WtD2Lb9YWzetAmj1GCIhNTZ2SlY4N5u9eo14nT/8vlziFAy6LlFnhqNDTenk/uJ6ijpuYMWsdS2hqdCvDBnQ/lfe5FI5bkyJDRMy5QqbKpIRCn6L7ZlfuP4xd4zb504hSLteHn8BnZ/5TE8tG2baNtM6eTW3r17MTg4KNjmiZYvX446KiX7urvhT01gcGoaNwOzlEkl/pWMRN4igPWEehmBNcIzC2lERJ4ScUfCwEPH1HZFtWYKLBX070WdyPeGJyZfOvjvj7MfHj8Oc3gAtlvGLgK8ZetWUQJfoeiRI103NTbCWrJkCZqamgRLPBG3Ru3U381fsIB6vAGUx66LbRksUGq3nCECf7AmFjtCgIrEZAOBnKVOi26zX4kMpgRtaizLBvUqsfqPiGX/dHRy6jdvnT7b99fX3sDAZ2eQpvBLToi9XV1Ys3atKMyUhJjMbiLTWEQAd+3eDQavsh4nlZaWFnEs++477+BSTw9yJUo26VrUzG5Fa1MDVre1oqWuNkUgN5DB2ynGbiBnaqfw1Ui6S9J3m52KwE7TGKOF+2QBf4wSysmegatjxz49j5NnzmCopxsNJv+npkcNcTs6Ox8XYbgsT7BUo3D69Gm8cvAg/i/AADWlHsTpY9/mAAAAAElFTkSuQmCC');
+    }
+
+    .input_count {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+        font-size: 15px;
+        padding: 0 7px;
+    }
+    .input_count > div {
+        margin: 0;
+        width: 11px;
+    }
+    .input_count > div.active {
+        font-weight: bold;
+    }
+
+</style>
+
+<div class="calc_wrapper">
+    <div class="calc_title">Сколько часов в неделю <br> Вы тратите на уборку пола?</div>
+
+    <div class="calc_range_group">
+        <input type="hidden" class="calc_input" id="oneType" step="1" min="1" max="5" value="1"/>
+        <input class="calc_range" type="range" step="1" min="1" max="5" value="1">
+        <div class="input_count">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+        </div>
+    </div>
+
+    <p class="first_text">Сэкономленного времени хватит, чтобы за полгода научиться играть на гитаре</p>
+    <p class="or_text">или</p>
+    <p class="second_text">Сэкономленного времени хватит, чтобы начать раз в неделю ходить на массаж</p>
+</div>
+
+<script>
+let questions = {
+    1: ['Сэкономленного времени хватит, чтобы за полгода научиться играть на гитаре',
+        'Сэкономленного времени хватит, чтобы начать раз в неделю ходить на массаж'],
+    2: ['Сэкономленного времени хватит, чтобы за год пройти курс "Разговорный английский для путешественников"',
+        'Сэкономленного времени хватит, чтобы ходить в кино с любимым человеком 4 раза в месяц'],
+    3: ['Сэкономленного времени хватит, чтобы за полгода прочитать 4 тома произведения "Война и мир"',
+        'Сэкономленного времени хватит на еженедельное барбекю с друзьями'],
+    4: ['Сэкономленного времени хватит, чтобы за 3 месяца посмотреть все серии "Игры Престолов"',
+        'Сэкономленного времени хватит, чтобы наконец-то начать высыпаться :)'],
+    5: ['Сэкономленного времени хватит, чтобы за полгода выучиться на пилота вертолёта',
+        'Сэкономленного времени хватит, чтобы начать реализовывать свои задумки и идеи']
+}
+
+let firstText = document.querySelector('.first_text');
+let secondText = document.querySelector('.second_text');
+
+
+
+// Input range
+let numbers = document.querySelectorAll('.input_count div');
+let allRangeGroup = document.querySelectorAll('.calc_range_group');
+allRangeGroup.forEach(rangeGroup => {
+
+    let inputNumber = rangeGroup.querySelector('.calc_input');
+    let inputRange = rangeGroup.querySelector('.calc_range');
+    let min = +inputNumber.getAttribute('min');
+    let max = +inputNumber.getAttribute('max');
+    let percent = 0;
+
+    inputRange.addEventListener('input', e => {
+        inputNumber.value = inputRange.value;
+        calcRange();
+    })
+
+    inputNumber.addEventListener('input', e => {
+        inputRange.value = inputNumber.value;
+        calcRange();
+    })
+
+    window.addEventListener('load', e => {
+        calcRange();
+    })
+
+    function calcRange() {
+        numbers.forEach(number => {
+            if (number.innerHTML == inputNumber.value) {
+                number.classList.add('active');
+            } else {
+                number.classList.remove('active');
+            }
+        })
+        for (key in questions) {
+            if (key == inputNumber.value) {
+                firstText.innerHTML = questions[key][0];
+                secondText.innerHTML = questions[key][1];
+            }
+        }
+        percent = (inputNumber.value - min) * 100 / (max - min);
+        inputRange.style.cssText = "" +
+            "background-image: -webkit-linear-gradient(left, rgb(182, 34, 181) " + percent + "%, rgb(182, 34, 181) " + percent + "%, rgb(236, 236, 236) 0%, rgb(236, 236, 236) 100%);"
+    }
+})
+</script>
+</body>
+</html>
